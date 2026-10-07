@@ -1,3 +1,4 @@
+```html
 <!doctype html>
 <html lang="fa" dir="rtl">
   <head>
@@ -6,11 +7,14 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
     />
+
     <title>یه سورپرایز کوچیک برای تو ❤️</title>
+
     <link
       href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css"
       rel="stylesheet"
     />
+
     <style>
       :root {
         --red: #e8123f;
@@ -20,16 +24,20 @@
         --deep: #7a1f49;
         --glass: rgba(255, 255, 255, 0.78);
       }
+
       * {
         box-sizing: border-box;
         margin: 0;
         padding: 0;
       }
+
       html,
       body {
+        width: 100%;
         height: 100%;
         touch-action: manipulation;
       }
+
       body {
         font-family: "Vazirmatn", system-ui, sans-serif;
         color: var(--deep);
@@ -37,444 +45,845 @@
         position: relative;
         background: #ffe3f3;
       }
+
       #bg {
         position: fixed;
         inset: 0;
         z-index: 0;
+
         background:
           linear-gradient(rgba(255, 220, 238, 0.55), rgba(233, 212, 255, 0.55)),
           url("images/bg.jpg") center/cover no-repeat;
       }
+
+      /* =========================
+         SCENES
+      ========================= */
+
       .scene {
         position: fixed;
         inset: 0;
         z-index: 10;
+
         display: none;
         flex-direction: column;
         align-items: center;
         justify-content: center;
+
         text-align: center;
         padding: 20px;
+
         opacity: 0;
         transition: opacity 0.6s;
+
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
       }
+
       .scene.active {
         display: flex;
         opacity: 1;
       }
+
       .scene.active .reveal {
         animation: rise 0.9s cubic-bezier(0.2, 0.9, 0.3, 1.2) both;
       }
+
       @keyframes rise {
         from {
           transform: translateY(36px) scale(0.9);
           opacity: 0;
         }
+
         to {
           transform: none;
           opacity: 1;
         }
       }
+
       h1 {
         font-size: clamp(24px, 6vw, 50px);
         line-height: 1.4;
         margin-bottom: 8px;
         text-shadow: 0 2px 0 #fff;
       }
+
       h2 {
         font-size: clamp(18px, 5vw, 32px);
         margin-bottom: 10px;
       }
+
       p {
         font-size: clamp(14px, 3.4vw, 20px);
         line-height: 1.95;
         max-width: 600px;
         margin: 6px auto;
       }
+
       .red {
         color: var(--red);
       }
+
       .sub {
         color: #a84a7e;
       }
+
+      /* =========================
+         PHOTO
+      ========================= */
+
       .photo {
         width: min(78vw, 400px);
-        aspect-ratio: 3/2;
-        border-radius: 22px;
-        object-fit: cover;
-        border: 5px solid #fff;
-        box-shadow: 0 18px 44px rgba(122, 31, 73, 0.35);
+        aspect-ratio: 3/3;
+
+        /* border-radius: 22px; */
+        /* object-fit: cover; */
+
+        /* border: 5px solid #fff; */
+
+        /* box-shadow: 0 18px 44px rgba(122, 31, 73, 0.35); */
+
         margin-bottom: 18px;
+
         animation: floaty 4s ease-in-out infinite;
       }
+
       @keyframes floaty {
         0%,
         100% {
           transform: translateY(0) rotate(-1deg);
         }
+
         50% {
           transform: translateY(-10px) rotate(1deg);
         }
       }
+
+      /* =========================
+         CARD
+      ========================= */
+
       .card {
         background: var(--glass);
         backdrop-filter: blur(8px);
+
         border-radius: 22px;
         padding: 20px 26px;
+
         max-width: 620px;
+
         border: 2px solid #fff;
+
         box-shadow: 0 14px 36px rgba(232, 18, 63, 0.2);
       }
+
+      /* =========================
+         START BUTTON
+      ========================= */
+
       .start {
         margin-top: 22px;
+
         padding: 14px 36px;
+
         border: none;
         border-radius: 50px;
+
         cursor: pointer;
+
         font-family: inherit;
         font-weight: 800;
         font-size: 19px;
+
         color: #fff;
+
         background: linear-gradient(135deg, var(--red2), var(--purple));
+
         box-shadow: 0 10px 24px rgba(232, 18, 63, 0.45);
+
         animation: pulse 1.2s infinite;
+
         -webkit-tap-highlight-color: transparent;
       }
+
       @keyframes pulse {
         0%,
         100% {
           transform: scale(1);
         }
+
         50% {
           transform: scale(1.07);
         }
       }
-      /* ===== CAT (no border/ring, just real cat + text) ===== */
+
+      /* =========================
+         CAT
+      ========================= */
+
       #cat {
         position: fixed;
+
         z-index: 90;
+
         display: none;
+
         cursor: pointer;
         user-select: none;
+
         -webkit-tap-highlight-color: transparent;
+
         text-align: center;
+
+        /*
+          کمی زمان بیشتر برای حرکت طبیعی
+        */
         transition:
-          left 0.95s cubic-bezier(0.22, 1, 0.36, 1),
-          top 0.95s cubic-bezier(0.22, 1, 0.36, 1);
+          left 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+          top 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+          transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
       }
+
       #cat.show {
         display: block;
         animation: catIn 0.5s ease;
       }
+
       @keyframes catIn {
         from {
           transform: scale(0) rotate(-12deg);
         }
+
         to {
           transform: scale(1) rotate(0);
         }
       }
+
       #cat img {
         width: clamp(100px, 22vw, 140px);
         height: auto;
+
         display: block;
+
         filter: drop-shadow(0 10px 22px rgba(122, 31, 73, 0.45));
+
         -webkit-user-drag: none;
+
         pointer-events: none;
       }
+
       #cat .bubble {
         background: #fff;
+
         color: var(--red);
+
         font-weight: 800;
+
         font-size: clamp(13px, 2.8vw, 16px);
+
         padding: 6px 14px;
+
         border-radius: 40px;
+
         display: inline-block;
+
         margin-bottom: 6px;
+
         box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+
         white-space: nowrap;
+
         position: relative;
       }
+
       #cat .bubble:after {
         content: "";
+
         position: absolute;
+
         bottom: -6px;
         right: 22px;
+
         border: 6px solid transparent;
+
         border-top-color: #fff;
         border-bottom: 0;
       }
+
       #cat.wiggle img {
         animation: wig 0.45s;
       }
+
       @keyframes wig {
         0%,
         100% {
           transform: rotate(0);
         }
+
         25% {
           transform: rotate(-10deg);
         }
+
         75% {
           transform: rotate(10deg);
         }
       }
-      /* ===== DOLL GAME (no border/ring, big pink teddy) ===== */
+
+      /* =========================
+         DOLL GAME
+      ========================= */
+
+      #dollGameArea {
+        position: fixed;
+
+        inset: 0;
+
+        z-index: 30;
+
+        pointer-events: none;
+      }
+
+      #dollMover {
+        position: fixed;
+
+        z-index: 40;
+
+        left: 50%;
+        top: 50%;
+
+        transform: translate(-50%, -50%);
+
+        width: max-content;
+
+        text-align: center;
+
+        pointer-events: auto;
+
+        transition:
+          left 0.65s cubic-bezier(0.34, 1.5, 0.64, 1),
+          top 0.65s cubic-bezier(0.34, 1.5, 0.64, 1),
+          transform 0.65s cubic-bezier(0.34, 1.5, 0.64, 1);
+      }
+
       #dollImg {
         width: clamp(140px, 38vw, 230px);
+
         height: auto;
+
         display: block;
+
         cursor: pointer;
+
         user-select: none;
+
         -webkit-tap-highlight-color: transparent;
+
         filter: drop-shadow(0 14px 30px rgba(232, 18, 63, 0.4));
-        transition: all 0.65s cubic-bezier(0.34, 1.6, 0.64, 1);
+
+        transition:
+          filter 0.3s,
+          transform 0.65s cubic-bezier(0.34, 1.6, 0.64, 1);
+
         -webkit-user-drag: none;
       }
+
       #dollImg.glow {
-        filter: drop-shadow(0 0 30px 8px rgba(232, 18, 63, 0.7));
+        filter: drop-shadow(0 0 30px rgba(232, 18, 63, 0.7))
+          drop-shadow(0 14px 30px rgba(232, 18, 63, 0.4));
       }
-      /* ===== LOVE METER ===== */
+
+      /*
+        متن همیشه بالای عروسک
+      */
+
+      #dollText {
+        position: absolute;
+
+        bottom: calc(100% + 14px);
+
+        left: 50%;
+
+        transform: translateX(-50%);
+
+        width: max-content;
+
+        max-width: 85vw;
+
+        margin: 0 !important;
+
+        padding: 7px 16px;
+
+        background: #fff;
+
+        border-radius: 40px;
+
+        box-shadow: 0 7px 18px rgba(0, 0, 0, 0.13);
+
+        white-space: nowrap;
+
+        color: var(--red);
+
+        font-weight: 800;
+
+        font-size: clamp(15px, 4vw, 21px);
+
+        z-index: 50;
+      }
+
+      #dollText::after {
+        content: "";
+
+        position: absolute;
+
+        bottom: -7px;
+
+        left: 50%;
+
+        transform: translateX(-50%);
+
+        border-left: 7px solid transparent;
+        border-right: 7px solid transparent;
+        border-top: 8px solid #fff;
+      }
+
+      /* =========================
+         LOVE METER
+      ========================= */
+
       #loveNum {
         font-size: clamp(54px, 18vw, 140px);
+
         font-weight: 800;
+
         color: var(--red);
+
         line-height: 1;
+
         text-shadow: 0 4px 0 #fff;
+
         animation: beat 1s infinite;
       }
+
       @keyframes beat {
         0%,
         100% {
           transform: scale(1);
         }
+
         50% {
           transform: scale(1.06);
         }
       }
+
       .btn {
         display: inline-block;
+
         margin: 10px 6px;
+
         padding: 13px 28px;
+
         border: none;
+
         border-radius: 50px;
+
         cursor: pointer;
+
         font-family: inherit;
+
         font-weight: 800;
+
         font-size: 17px;
+
         color: #fff;
+
         background: linear-gradient(135deg, var(--red2), var(--purple));
+
         box-shadow: 0 8px 20px rgba(232, 18, 63, 0.4);
-        transition: transform 0.25s;
+
+        transition:
+          transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+          box-shadow 0.35s;
+
         -webkit-tap-highlight-color: transparent;
       }
+
       .btn:hover {
         transform: scale(1.06);
       }
+
       .btn:active {
         transform: scale(0.96);
       }
+
       .btn.ghost {
         background: #fff;
         color: var(--red);
       }
+
+      /*
+        Love buttons
+      */
+
+      #loveBtns {
+        position: relative;
+
+        display: flex;
+
+        justify-content: center;
+        align-items: center;
+
+        gap: 14px;
+
+        margin-top: 16px;
+      }
+
+      #tenBtn,
+      #twBtn {
+        transition:
+          transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1),
+          padding 0.3s,
+          box-shadow 0.3s;
+      }
+
+      #tenBtn {
+        transform: scale(1);
+      }
+
+      #twBtn {
+        transform: scale(1);
+      }
+
       .tg {
         display: inline-flex;
+
         align-items: center;
+
         gap: 8px;
+
         background: linear-gradient(135deg, #2aabee, #1f93d1);
       }
+
       .tg svg {
         width: 22px;
         height: 22px;
+
         fill: #fff;
       }
-      /* effects */
+
+      /* =========================
+         EFFECTS
+      ========================= */
+
       .heart {
         position: fixed;
+
         bottom: -40px;
+
         font-size: 22px;
+
         pointer-events: none;
+
         z-index: 5;
+
         animation: float 8s linear infinite;
+
         opacity: 0.8;
       }
+
       @keyframes float {
         to {
           transform: translateY(-120vh) rotate(360deg);
+
           opacity: 0;
         }
       }
+
       .conf {
         position: fixed;
+
         top: -20px;
+
         width: 9px;
         height: 15px;
+
         z-index: 70;
+
         pointer-events: none;
+
         border-radius: 2px;
+
         animation: fall linear forwards;
       }
+
       @keyframes fall {
         to {
           transform: translateY(106vh) rotate(560deg);
+
           opacity: 0.9;
         }
       }
-      /* secret dot on intro */
+
+      /* =========================
+         SECRET DOT
+      ========================= */
+
       #dot {
         position: absolute;
+
         bottom: 10px;
         left: 10px;
+
         width: 34px;
         height: 34px;
+
         z-index: 45;
+
         cursor: pointer;
+
         -webkit-tap-highlight-color: transparent;
       }
+
       #dot::after {
         content: "";
+
         position: absolute;
+
         left: 50%;
         top: 50%;
+
         width: 9px;
         height: 9px;
+
         margin: -4.5px 0 0 -4.5px;
+
         border-radius: 50%;
+
         background: rgba(232, 18, 63, 0.18);
+
         animation: tiny 3.6s infinite;
+
         transition:
           transform 0.25s,
           background 0.25s,
           box-shadow 0.25s;
       }
+
       #dot:hover::after {
         opacity: 1;
+
         transform: scale(2.2);
+
         background: var(--red);
+
         box-shadow: 0 0 14px rgba(232, 18, 63, 0.85);
       }
+
       @keyframes tiny {
         0%,
         100% {
           opacity: 0.1;
         }
+
         50% {
           opacity: 0.26;
         }
       }
+
+      /* =========================
+         MOBILE
+      ========================= */
+
+      @media (max-width: 600px) {
+        .scene {
+          padding: 14px;
+        }
+
+        .card {
+          padding: 17px 18px;
+        }
+
+        #cat img {
+          width: 105px;
+        }
+
+        #cat .bubble {
+          font-size: 13px;
+          padding: 5px 11px;
+        }
+
+        #dollImg {
+          width: 165px;
+        }
+
+        #dollText {
+          font-size: 15px;
+          padding: 6px 12px;
+        }
+
+        .btn {
+          padding: 12px 20px;
+          font-size: 15px;
+        }
+      }
     </style>
   </head>
+
   <body>
     <div id="bg"></div>
 
-    <!-- 0 INTRO -->
+    <!-- =====================================================
+         0 INTRO
+    ====================================================== -->
+
     <section class="scene active" id="s-intro">
       <div class="reveal card">
-        <h1>🎀 مبارک 🎀</h1>
-        <p>یه دنیا سورپرایز برات ساختم… آماده‌ای؟</p>
+        <h2>🎀 روزت تبریک زیباترین مخلوق خدا🎀</h2>
+
+        <p>فاطی جون عشقم امیدوارم این سورپرایز خوشت بیاد</p>
       </div>
+
       <button class="start" onclick="startJourney()">شروع کنیم 💝</button>
+
       <div id="dot" onclick="openSecret()"></div>
     </section>
 
-    <!-- 1 PASTIL -->
+    <!-- =====================================================
+         1 PASTIL
+    ====================================================== -->
+
     <section class="scene" id="s-pastil">
-      <img class="photo reveal" src="images/pastil.jpg" alt="پاستیل" />
+      <img class="photo reveal" src="images/Colorful.png" alt="پاستیل" />
+
       <div class="reveal card">
-        <h2>🍬 یه بسته پاستیل برای تو</h2>
+        <h2>🍬 روزت مبارک عقشم زندگیت به قشنگی رنگ های پاستیل</h2>
+
         <p>
-          آرزو می‌کنم زندگیت همینقدر رنگی، شیرین و دل‌چسب باشه… دقیقاً مثل خودت
+          می‌گن شیرینیِ بعضی لحظه‌ها به چیزیه که می‌خوری، ولی من فکر می‌کنم
+          شیرینیِ واقعی، به آدمیه که اون لحظه کنارت باشه. پاستیل‌ها رو که دیدم،
+          یاد تو افتادم؛ هر کدومشون یه رنگ و یه شکل دارن، ولی وقتی کنار هم قرار
+          می‌گیرن، یه چیز قشنگ می‌سازن… درست مثل تو که با بودنت، معمولی‌ترین
+          لحظه‌های زندگی منو قشنگ می‌کنی. 🍭🤍
           <span class="red">💞</span>
         </p>
       </div>
     </section>
 
-    <!-- 2 DOLL -->
+    <!-- =====================================================
+         2 DOLL
+    ====================================================== -->
+
     <section class="scene" id="s-doll">
-      <img class="photo reveal" src="images/doll.jpg" alt="عروسک" />
+      <img class="photo reveal" src="images/doll.png" alt="عروسک" />
+
       <div class="reveal card">
-        <h2>🧸 یه بغل نرم و گرم</h2>
+        <h2>می‌دونم خیلی عروسک دوست داری 🧸🤍</h2>
+
         <p>
-          این عروسک قول داده هر شب جای من بغلت کنه… هر دفعه بغلش کنی یادت باشه
-          یه نفر دیووونه‌وار دوستت داره <span class="red">❤️</span>
+          منم تصمیم گرفتم به مناسبت روز دختر یه قول قشنگ بهت بدم؛ اینکه همین که
+          برسم پیشت، هر عروسکی رو که خودت انتخاب کنی، هرچقدر هم بزرگ باشه، برات
+          می‌خرم. 🎀 فقط برای اینکه هر وقت بغلش می‌کنی، یه گوشه‌ای از منو حس کنی
+          و همیشه یادت باشم. امیدوارم هر بار که بغلش می‌کنی، لبخند روی لبت بیاد
+          و بدونی یکی هست که خیلی دوستت داره
+          <span class="red">❤️</span>
         </p>
       </div>
     </section>
 
-    <!-- 3 MAKEUP -->
+    <!-- =====================================================
+         3 MAKEUP
+    ====================================================== -->
+
     <section class="scene" id="s-makeup">
-      <img class="photo reveal" src="images/makeup.jpg" alt="لوازم آرایش" />
+      <img class="photo reveal" src="images/Makeup.png" alt="لوازم آرایش" />
+
       <div class="reveal card">
-        <h2>💄 یه دنیا درخشش</h2>
+        <h2>💄 اینو برات گذاشتم که یه واقعیت رو برات بگم</h2>
+
         <p>
-          تو بدون هیچکدوم اینا هم قشنگ‌ترین دختر دنیایی… اینا فقط بهونه‌ن که یکم
-          بیشتر بدرخشی <span class="red">✨</span>
+          تهمیشه آرایش می‌کنی و عاشق لوازم آرایشی هستی، ولی یه چیز رو باید
+          بدونی… ❤️ خدا تو رو همین‌قدر قشنگ آفریده و فرستاده توی این دنیا تا به
+          همه ثابت کنه که چه خالق بزرگی داریم. انگار تو رو ساخته تا زیباییِ
+          آفرینشش رو به رخ دنیا بکشه. 🥹❤️
+          <span class="red">✨</span>
         </p>
       </div>
     </section>
 
-    <!-- 4 GIRL'S DAY -->
+    <!-- =====================================================
+         4 GIRL'S DAY
+    ====================================================== -->
+
     <section class="scene" id="s-girlsday">
-      <img class="photo reveal" src="images/girlsday.jpg" alt="روز دختر" />
+      <img class="photo reveal" src="images/Persian.png" alt="روز دختر" />
+
       <div class="reveal card">
-        <h1 class="red">روزت مبارک، دختر قشنگ</h1>
+        <h1 class="red">روزت مبارک، خوشگل ترین دختر دنیا</h1>
+
         <p>
-          تو همون آدمی که بدون هیچ تلاشی، فقط با بودنت، روزای منو قشنگ کردی.
-          همیشه بخندی، همیشه آروم باشی، و به هر چی آرزو داری برسی
+          ت همون تک آدمی هستی که فقط و فقط با بودنت کنارم میتونم از هر مشکل و هر
+          سختی که ت زندگی سر راهم قرار میگیره رد بشم، امید وارم همیشه کنارم باشی
+          عشق قشنگم
           <span class="red">🎀</span>
         </p>
       </div>
     </section>
 
-    <!-- 5 DOLL GAME -->
+    <!-- =====================================================
+         5 DOLL GAME
+    ====================================================== -->
+
     <section class="scene" id="s-dollgame">
-      <img
-        id="dollImg"
-        src="images/doll2.png"
-        alt="بزن رو من"
-        onclick="dollJump()"
-      />
-      <p
-        id="dollText"
-        class="red"
-        style="
-          margin-top: 20px;
-          font-weight: 800;
-          font-size: clamp(18px, 4vw, 22px);
-        "
-      >
-        بزن رو من 👉
-      </p>
+      <div id="dollGameArea">
+        <div id="dollMover">
+          <div id="dollText">منو سامی برا ت ساخته اا👉</div>
+
+          <img
+            id="dollImg"
+            src="images/doll2.png"
+            alt="تحفه از طرف سامی"
+            onclick="dollJump()"
+          />
+        </div>
+      </div>
     </section>
 
-    <!-- 6 LOVE METER -->
+    <!-- =====================================================
+         6 LOVE METER
+    ====================================================== -->
+
     <section class="scene" id="s-love">
       <div class="card reveal" style="margin-bottom: 14px">
-        <h2>من که خیلی خیلی دوست دارم و عاشقتم <span class="red">❤️</span></h2>
-        <p>حالا تو هم بگو دیگه… چقدر دوسم داری؟</p>
+        <h2>
+          منو ک بدجور عاشق خودت کردی اا
+          <span class="red">❤️</span>
+        </h2>
+
+        <p>حالا بگو ت چقدر دوسم داری؟</p>
       </div>
+
       <div id="loveNum">۲۰٪</div>
-      <div
-        id="loveBtns"
-        style="margin-top: 16px; display: flex; gap: 12px; align-items: center"
-      >
+
+      <div id="loveBtns">
         <button class="btn ghost" id="tenBtn" onclick="addLove()">
           ۱۰ درصد
         </button>
+
         <button class="btn" id="twBtn" onclick="addLove()">۲۰ درصد</button>
       </div>
+
       <p id="loveHint" class="red" style="margin-top: 14px; font-weight: 800">
         بزن دیگه 😏
       </p>
+
       <div id="loveDone" style="display: none; margin-top: 6px">
-        <h2 class="red">بیا اینو برام تو تلگرام بگو</h2>
+        <h2 class="red">
+          وااای خداااا اصلا باورم نمیشه ت هم منو اینقدر دوستم داری 🥺
+        </h2>
+
         <a
           class="btn tg"
           id="tgLink"
-          href="https://t.me/USERNAME"
+          href="https://t.me/sawee0"
           target="_blank"
           rel="noopener"
         >
@@ -483,139 +892,206 @@
               d="M9.8 16.6l-.4 4c.6 0 .8-.3 1.1-.6l2.6-2.5 5.4 4c1 .5 1.7.3 2-.9l3.6-16.9c.3-1.4-.5-2-1.5-1.6L1.3 9.9C-.1 10.5 0 11.3 1.1 11.6l5.4 1.7L18.9 5.9c.6-.4 1.1-.2.7.2z"
             />
           </svg>
-          برو تلگرام و بهم بگو
+
+          بیا اینو با بوسه از لب هات برام ثابت کن
         </a>
       </div>
     </section>
 
-    <!-- SECRET -->
+    <!-- =====================================================
+         SECRET
+    ====================================================== -->
+
     <section class="scene" id="s-secret">
       <img class="photo reveal" src="images/love.jpg" alt="سورپرایز" />
+
       <div class="reveal card">
-        <h1 class="red">تو پیداش کردی 😍</h1>
+        <h1 class="red">سلام عشق قشنگم😍</h1>
+
+        <p>آوردمت این گوشه ک یه چیزی بهت بگم ااا</p>
+
         <p>
-          این گوشهٔ کوچیک رو فقط کسی پیدا می‌کنه که واقعاً حواسش به همه‌چی هست…
-          دقیقاً مثل تو.
+          ت که نمیدونی ولی میخام بهت بگم ت یکی از بهترین و خوشگل ترین اتفاق های
+          زندگی منی اتفاقی که هر شب تا صبح بهش فک میکنم و این فکرها قشنگ ترین
+          فکرهای زندگی منه
         </p>
-        <p>
-          می‌دونی؟ بین همهٔ آدم‌های دنیا، چشم‌های من همیشه تو رو پیدا می‌کنه. تو
-          آروم‌ترین و قشنگ‌ترین اتفاق روزای منی، حتی اگه خودت ندونی.
-        </p>
+
         <p class="red">
-          هر جای این دنیا که باشی، یه نفر اینجا هست که از ته دل، بی‌چشمداشت،
-          دوستت داره ❤️
+          هر جای این دنیا که باشی، یه نفر اینجا هست که از ته دل، دوستت داره و
+          عاشقته❤️
         </p>
       </div>
     </section>
 
-    <!-- CAT navigator -->
+    <!-- =====================================================
+         CAT NAVIGATOR
+    ====================================================== -->
+
     <div id="cat" onclick="catPoke(event)">
-      <div class="bubble" id="catBubble">بزن رو من 🐾</div>
+      <div class="bubble" id="catBubble">منو مخای بگیرم🐾</div>
+
       <img src="images/cat.png" alt="گربه" />
     </div>
 
     <script>
-      /* ===== Telegram username (without @) ===== */
+      /* =====================================================
+         TELEGRAM
+      ====================================================== */
+
       const TELEGRAM_USERNAME = "sawee0";
+
       const $ = (id) => document.getElementById(id);
+
       $("tgLink").href = "https://t.me/" + TELEGRAM_USERNAME;
+
+      /* =====================================================
+         PERSIAN NUMBERS
+      ====================================================== */
+
       function toFa(n) {
         return ("" + n).replace(/[0-9]/g, (d) => "۰۱۲۳۴۵۶۷۸۹"[d]);
       }
 
-      /* --- viewport for mobile --- */
+      /* =====================================================
+         VIEWPORT
+      ====================================================== */
+
       function vv() {
-        return { w: innerWidth, h: innerHeight };
+        return {
+          w: window.innerWidth,
+          h: window.innerHeight,
+        };
       }
 
-      /* --- scenes --- */
+      /* =====================================================
+         SCENES
+      ====================================================== */
+
       const passiveNext = {
         "s-pastil": "s-doll",
         "s-doll": "s-makeup",
         "s-makeup": "s-girlsday",
         "s-girlsday": "s-dollgame",
       };
+
       function show(id) {
         document
           .querySelectorAll(".scene")
           .forEach((s) => s.classList.remove("active"));
+
         const el = $(id);
+
         el.classList.add("active");
+
         el.scrollTop = 0;
       }
+
       function enterScene(id) {
         hideCat();
+
         show(id);
+
         bigConf();
+
         if (passiveNext[id]) {
-          setTimeout(() => summonCat(passiveNext[id]), 1700);
+          setTimeout(() => {
+            summonCat(passiveNext[id]);
+          }, 1700);
         }
       }
+
       function startJourney() {
         $("s-intro").querySelector(".start").style.display = "none";
+
         summonCat("s-pastil");
       }
 
-      /* ===== THE CAT ===== */
+      /* =====================================================
+         CAT
+      ====================================================== */
 
       const cat = $("cat");
+
       const catBubble = $("catBubble");
 
       let catTarget = null;
+
       let dodges = 0;
+
       let maxDodge = 5;
+
       let catShown = false;
+
       let caught = false;
+
       let lastDodge = 0;
 
-      // زمان بین دو فرار
       const DODGE_CD = 500;
 
-      // آخرین موقعیت گربه
       let lastCatX = null;
+
       let lastCatY = null;
 
-      /* ===== SHOW CAT ===== */
+      /* =====================================================
+         SHOW CAT
+      ====================================================== */
 
       function summonCat(target) {
         catTarget = target;
 
         dodges = 0;
+
         caught = false;
+
         catShown = true;
 
         lastCatX = null;
         lastCatY = null;
 
-        catBubble.textContent = "بزن رو من 🐾";
+        catBubble.textContent = "منو مخای بگیرم🐾";
 
-        const v = vv();
-
-        // اولین موقعیت کاملاً تصادفی
         placeCatRandom();
 
         cat.classList.add("show");
       }
 
-      /* ===== HIDE CAT ===== */
+      /* =====================================================
+         HIDE CAT
+      ====================================================== */
 
       function hideCat() {
         catShown = false;
+
         caught = true;
 
         cat.classList.remove("show");
       }
 
-      /* ===== RANDOM CAT POSITION ===== */
+      /* =====================================================
+         RANDOM CAT POSITION
+         
+         گربه اکنون تقریباً کل صفحه
+         را می‌تواند استفاده کند.
+      ====================================================== */
 
       function placeCatRandom() {
         const v = vv();
 
-        const cw = 160;
-        const ch = 180;
+        /*
+          اندازه تقریبی خود گربه + حباب
+        */
 
-        const paddingX = 30;
-        const paddingY = 60;
+        const cw = Math.min(170, v.w * 0.42);
+
+        const ch = Math.min(190, v.h * 0.3);
+
+        /*
+          فاصله بسیار کم از لبه‌ها
+        */
+
+        const paddingX = Math.max(8, v.w * 0.015);
+
+        const paddingY = Math.max(8, v.h * 0.015);
 
         let x;
         let y;
@@ -625,37 +1101,32 @@
         do {
           x = paddingX + Math.random() * Math.max(1, v.w - cw - paddingX * 2);
 
-          y = paddingY + Math.random() * Math.max(1, v.h - ch - 120);
+          y = paddingY + Math.random() * Math.max(1, v.h - ch - paddingY * 2);
 
           attempts++;
-
-          /*
-           * اگر گربه قبلاً جای مشخصی داشته،
-           * اجازه نده خیلی نزدیک همان نقطه ظاهر شود.
-           */
         } while (
-          attempts < 50 &&
+          attempts < 80 &&
           lastCatX !== null &&
-          Math.hypot(x - lastCatX, y - lastCatY) < Math.min(v.w, v.h) * 0.25
+          Math.hypot(x - lastCatX, y - lastCatY) < Math.min(v.w, v.h) * 0.32
         );
 
         lastCatX = x;
         lastCatY = y;
 
-        /*
-         * حرکت نرم و کمی غیرقابل پیش‌بینی
-         */
         const rotate = -18 + Math.random() * 36;
 
         const scale = 0.9 + Math.random() * 0.2;
 
         cat.style.left = x + "px";
+
         cat.style.top = y + "px";
 
         cat.style.transform = "rotate(" + rotate + "deg) scale(" + scale + ")";
       }
 
-      /* ===== DODGE ===== */
+      /* =====================================================
+         DODGE
+      ====================================================== */
 
       function dodge() {
         if (!catShown || caught) return;
@@ -668,36 +1139,19 @@
 
         dodges++;
 
-        /*
-         * بعد از 5 بار فرار،
-         * اجازه می‌دهد کاربر گربه را بگیرد.
-         */
         if (dodges > maxDodge) {
           catchCat();
           return;
         }
 
-        /*
-         * اجرای دوباره انیمیشن
-         */
         cat.classList.remove("wiggle");
 
         void cat.offsetWidth;
 
         cat.classList.add("wiggle");
 
-        /*
-         * مقصد کاملاً تصادفی
-         *
-         * هیچ ax / ay از موس دریافت نمی‌کنیم.
-         * بنابراین مسیر بعدی از روی موقعیت موس
-         * قابل پیش‌بینی نیست.
-         */
         placeCatRandom();
 
-        /*
-         * پیام‌های تصادفی
-         */
         const messages = [
           "هاها! اینجام 🐾",
           "نزدیک بود! 😜",
@@ -712,17 +1166,21 @@
           messages[Math.floor(Math.random() * messages.length)];
       }
 
-      /* ===== CATCH CAT ===== */
+      /* =====================================================
+         CATCH CAT
+      ====================================================== */
 
       function catchCat() {
         if (caught) return;
 
         caught = true;
+
         catShown = false;
 
         catBubble.textContent = "گرفتی! 🥰";
 
         heartBurst(22);
+
         bigConf();
 
         setTimeout(() => {
@@ -732,7 +1190,9 @@
         }, 400);
       }
 
-      /* ===== DESKTOP HOVER ===== */
+      /* =====================================================
+         DESKTOP
+      ====================================================== */
 
       document.addEventListener("mousemove", (e) => {
         if (!catShown || caught) return;
@@ -745,16 +1205,14 @@
 
         const distance = Math.hypot(e.clientX - cx, e.clientY - cy);
 
-        /*
-         * اگر موس به 170 پیکسل گربه رسید،
-         * گربه فرار می‌کند.
-         */
         if (distance < 170) {
           dodge();
         }
       });
 
-      /* ===== MOBILE TOUCH ===== */
+      /* =====================================================
+         MOBILE
+      ====================================================== */
 
       document.addEventListener(
         "touchmove",
@@ -773,62 +1231,133 @@
 
           const distance = Math.hypot(t.clientX - cx, t.clientY - cy);
 
-          if (distance < 170) {
+          if (distance < 180) {
             dodge();
           }
         },
-        { passive: true },
+        {
+          passive: true,
+        },
       );
 
-      /* ===== DOLL GAME ===== */
+      /* =====================================================
+         CAT CLICK
+      ====================================================== */
+
+      function catPoke(e) {
+        if (!catShown || caught) return;
+
+        e.stopPropagation();
+
+        dodge();
+      }
+
+      /* =====================================================
+         DOLL GAME
+      ====================================================== */
 
       let jump = 0;
 
       function dollJump() {
+        const mover = $("dollMover");
+
         const d = $("dollImg");
+
         const t = $("dollText");
+
         const v = vv();
 
         d.classList.add("glow");
+
         heartBurst(14);
 
         jump++;
 
-        // محدوده امن حرکت عروسک
-        const paddingX = v.w * 0.12;
-        const paddingY = v.h * 0.12;
+        /*
+          ابعاد واقعی عروسک
+        */
 
-        const minX = -v.w * 0.42;
-        const maxX = v.w * 0.42;
+        const dollWidth = Math.min(230, Math.max(140, v.w * 0.38));
 
-        const minY = -v.h * 0.3;
-        const maxY = v.h * 0.3;
+        /*
+          محدوده امن.
+          عروسک تقریباً کل صفحه را
+          استفاده می‌کند اما بیرون نمی‌رود.
+        */
 
-        // موقعیت تصادفی
-        const randomX = minX + Math.random() * (maxX - minX);
+        const horizontalMargin = Math.max(10, dollWidth * 0.15);
 
-        const randomY = minY + Math.random() * (maxY - minY);
+        const topMargin = Math.max(130, v.h * 0.18);
 
-        // چرخش تصادفی
-        const randomRotate = -25 + Math.random() * 50;
+        const bottomMargin = Math.max(60, v.h * 0.12);
 
-        // اندازه تصادفی
-        const randomScale = 0.85 + Math.random() * 0.35;
+        /*
+          موقعیت تصادفی بر اساس
+          خود صفحه، نه translate.
+        */
+
+        const minX = horizontalMargin + dollWidth / 2;
+
+        const maxX = v.w - horizontalMargin - dollWidth / 2;
+
+        /*
+          چون متن بالای عروسک است،
+          کمی جا در بالای صفحه نگه می‌داریم.
+        */
+
+        const minY = topMargin + 50;
+
+        const maxY = Math.max(minY, v.h - bottomMargin - dollWidth * 0.95);
+
+        let newX = minX + Math.random() * Math.max(1, maxX - minX);
+
+        let newY = minY + Math.random() * Math.max(1, maxY - minY);
+
+        /*
+          جلوگیری از پرش خیلی نزدیک
+          به موقعیت قبلی
+        */
+
+        let attempts = 0;
+
+        const oldRect = mover.getBoundingClientRect();
+
+        const oldX = oldRect.left + oldRect.width / 2;
+
+        const oldY = oldRect.top + oldRect.height / 2;
+
+        while (
+          attempts < 30 &&
+          Math.hypot(newX - oldX, newY - oldY) < Math.min(v.w, v.h) * 0.18
+        ) {
+          newX = minX + Math.random() * Math.max(1, maxX - minX);
+
+          newY = minY + Math.random() * Math.max(1, maxY - minY);
+
+          attempts++;
+        }
+
+        /*
+          اندازه تصادفی کوچک
+          اما نه آنقدر زیاد که
+          از صفحه خارج شود.
+        */
+
+        const randomRotate = -18 + Math.random() * 36;
+
+        const randomScale = 0.85 + Math.random() * 0.18;
+
+        mover.style.left = newX + "px";
+
+        mover.style.top = newY + "px";
+
+        mover.style.transform = "translate(-50%, -50%)";
 
         d.style.transform =
-          "translate(" +
-          randomX +
-          "px," +
-          randomY +
-          "px)rotate(" +
-          randomRotate +
-          "deg)scale(" +
-          randomScale +
-          ")";
+          "rotate(" + randomRotate + "deg) scale(" + randomScale + ")";
 
-        // پیام‌های مختلف
         const messages = [
-          "اوپس! بگیرم اگه میتونی 😜",
+          "وای خووودااا چقدر خوشگل شدی 🥺",
           "هاها! اینجام! 😂",
           "فکر کردی اینجام؟ 😏",
           "نه نه! دوباره پیدام کن! 🏃‍♀️",
@@ -838,86 +1367,172 @@
           "وای! نزدیک بود بگیریم! 🥹",
         ];
 
-        // پیام تصادفی
         t.textContent = messages[Math.floor(Math.random() * messages.length)];
 
-        // بعد از چند حرکت وارد مرحله بعد شو
+        /*
+          بعد از 6 بار
+          مرحله بعد
+        */
+
         if (jump >= 6) {
           setTimeout(() => {
             bigConf();
 
+            mover.style.left = "50%";
+
+            mover.style.top = "50%";
+
+            mover.style.transform = "translate(-50%, -50%)";
+
             d.style.transform = "";
+
             d.classList.remove("glow");
 
             jump = 0;
 
-            t.textContent = "بزن رو من 👉";
+            t.textContent = "من برای ت اماده شدم زیبا ترین دختر دنیا ";
 
             enterScene("s-love");
-          }, 500);
+          }, 650);
         }
       }
 
-      /* ===== LOVE METER ===== */
-      let love = 20,
-        tenScale = 1;
+      /* =====================================================
+         LOVE METER
+      ====================================================== */
+
+      let love = 20;
+
+      /*
+        اندازه اولیه دکمه‌ها
+      */
+
+      let tenScale = 1;
+
+      let twentyScale = 1;
+
       const loveMsgs = [
         "بازم بزن 😏",
         "بیشتر! بازم بزن 🥰",
         "نزدیکه… بازم بزن 😍",
         "یه ذره دیگه! بازم بزن 🤩",
       ];
+
       function addLove() {
         love = Math.min(100, love + 20);
-        tenScale = Math.max(0.3, tenScale - 0.18);
+
+        /*
+          هر بار:
+
+          دکمه ۱۰٪ کوچک‌تر
+          دکمه ۲۰٪ بزرگ‌تر
+        */
+
+        tenScale = Math.max(0.38, tenScale - 0.14);
+
+        twentyScale = Math.min(1.65, twentyScale + 0.13);
+
         $("tenBtn").style.transform = "scale(" + tenScale + ")";
+
+        $("twBtn").style.transform = "scale(" + twentyScale + ")";
+
+        /*
+          دکمه بزرگ‌تر
+          سایه قوی‌تری هم می‌گیرد.
+        */
+
+        $("twBtn").style.boxShadow =
+          "0 10px 28px rgba(232,18,63," + (0.35 + (love / 100) * 0.35) + ")";
+
         $("loveNum").textContent = toFa(love) + "٪";
+
         heartBurst(16);
+
         if (love < 100) {
           const i = Math.min(3, Math.floor((love - 40) / 20));
+
           $("loveHint").textContent = loveMsgs[i] || "بازم بزن 😏";
         } else {
           $("loveHint").style.display = "none";
+
           $("loveBtns").style.display = "none";
+
           $("loveDone").style.display = "block";
+
           bigConf();
         }
       }
 
-      /* ===== SECRET ===== */
+      /* =====================================================
+         SECRET
+      ====================================================== */
+
       function openSecret() {
         hideCat();
+
         show("s-secret");
+
         bigConf();
+
         heartBurst(18);
       }
 
-      /* ===== EFFECTS ===== */
+      /* =====================================================
+         HEARTS
+      ====================================================== */
+
       const hs = ["❤️", "💝", "💖", "🌸", "✨", "💗"];
+
       setInterval(() => {
         const h = document.createElement("div");
+
         h.className = "heart";
+
         h.textContent = hs[Math.floor(Math.random() * hs.length)];
+
         h.style.left = Math.random() * 100 + "vw";
+
         h.style.fontSize = 16 + Math.random() * 18 + "px";
+
         h.style.animationDuration = 6 + Math.random() * 5 + "s";
+
         document.body.appendChild(h);
+
         setTimeout(() => h.remove(), 11000);
       }, 800);
+
+      /* =====================================================
+         HEART BURST
+      ====================================================== */
+
       function heartBurst(n) {
         n = n || 18;
+
         for (let i = 0; i < n; i++) {
           const h = document.createElement("div");
+
           h.className = "heart";
+
           h.textContent = "❤️";
+
           h.style.left = Math.random() * 100 + "vw";
+
           h.style.bottom = Math.random() * 40 + "vh";
+
           h.style.fontSize = 18 + Math.random() * 20 + "px";
+
           h.style.animationDuration = 2 + Math.random() * 2 + "s";
+
           document.body.appendChild(h);
+
           setTimeout(() => h.remove(), 4200);
         }
       }
+
+      /* =====================================================
+         CONFETTI
+      ====================================================== */
+
       function bigConf() {
         const colors = [
           "#e8123f",
@@ -927,18 +1542,62 @@
           "#ffd54f",
           "#ff8fcf",
         ];
+
         for (let i = 0; i < 80; i++) {
           const c = document.createElement("div");
+
           c.className = "conf";
+
           c.style.left = Math.random() * 100 + "vw";
+
           c.style.background =
             colors[Math.floor(Math.random() * colors.length)];
+
           c.style.animationDuration = 1.6 + Math.random() * 1.8 + "s";
+
           c.style.transform = "rotate(" + Math.random() * 360 + "deg)";
+
           document.body.appendChild(c);
+
           setTimeout(() => c.remove(), 3800);
         }
       }
+
+      /* =====================================================
+         RESIZE
+         
+         اگر صفحه موبایل چرخانده شد،
+         گربه و عروسک از صفحه بیرون نمی‌مانند.
+      ====================================================== */
+
+      window.addEventListener("resize", () => {
+        if (catShown && !caught) {
+          placeCatRandom();
+        }
+
+        const dollScene = $("s-dollgame");
+
+        if (dollScene && dollScene.classList.contains("active")) {
+          const mover = $("dollMover");
+
+          const v = vv();
+
+          const rect = mover.getBoundingClientRect();
+
+          let x = rect.left + rect.width / 2;
+
+          let y = rect.top + rect.height / 2;
+
+          x = Math.max(20, Math.min(v.w - 20, x));
+
+          y = Math.max(100, Math.min(v.h - 40, y));
+
+          mover.style.left = x + "px";
+
+          mover.style.top = y + "px";
+        }
+      });
     </script>
   </body>
 </html>
+```
